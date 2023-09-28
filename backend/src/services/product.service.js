@@ -8,7 +8,7 @@ const findAllService = async () => {
         return { status: 'FAILURE', data: { message: 'error' } };
 };
 
-const findById = async (productId) => {
+const findByIdService = async (productId) => {
     const product = await productModel.findById(productId);
     if (product) {
         return { status: 'SUCCESSFUL', data: product };
@@ -18,5 +18,5 @@ const findById = async (productId) => {
 
 module.exports = {
     findAllService,
-    findById,
+    findByIdService,
 };

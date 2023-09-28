@@ -13,7 +13,7 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
     it('Testando a função findAll', async function () {
         sinon.stub(productModel, 'findAll').resolves(productMock.productsDB);
 
-        const products = await productService.findAll();
+        const products = await productService.findAllService();
 
         expect(products.data).to.be.deep.equal(productMock.productsDB);
         expect(products.status).to.be.equal('SUCCESSFUL');
@@ -22,9 +22,8 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
     it('Testando a função findById', async function () {
         sinon.stub(productModel, 'findById').resolves(productMock.productById);
 
-        const products = await productService.findById(1);
-        console.log(products);
-
+        const products = await productService.findByIdService(1);
+        
         expect(products.data).to.be.deep.equal(productMock.productById);
         expect(products.status).to.be.equal('SUCCESSFUL');
     });
