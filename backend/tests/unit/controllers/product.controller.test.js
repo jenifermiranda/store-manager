@@ -15,10 +15,10 @@ describe('realizando testes - PRODUCT CONTROLLER', function () {
         res.status = sinon.stub().returnsThis();
         res.json = sinon.stub();
     });
-    it('Testando a função findAllService', async function () {
-        sinon.stub(productService, 'findAllService').resolves({ status: 'SUCCESSFUL', data: productsDB });
+    it('Testando a função findAllProductController', async function () {
+        sinon.stub(productService, 'findAllProductService').resolves({ status: 'SUCCESSFUL', data: productsDB });
 
-        await productController.findAllController({}, res);
+        await productController.findAllProductController({}, res);
 
         expect(res.status).to.have.been.calledWith(200);
         expect(res.json).to.have.been.calledWith(productsDB);

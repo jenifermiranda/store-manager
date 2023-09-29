@@ -1,15 +1,15 @@
 const { productModel } = require('../models');
 
-const findAllService = async () => {
-    const products = await productModel.findAll();
+const findAllProductService = async () => {
+    const products = await productModel.findAllProductsModel();
     if (products) {
         return { status: 'SUCCESSFUL', data: products };
     }
         return { status: 'FAILURE', data: { message: 'error' } };
 };
 
-const findByIdService = async (productId) => {
-    const product = await productModel.findById(productId);
+const findByIdProductService = async (productId) => {
+    const product = await productModel.findByIdProductModel(productId);
     if (product) {
         return { status: 'SUCCESSFUL', data: product };
     }
@@ -17,6 +17,6 @@ const findByIdService = async (productId) => {
 };
 
 module.exports = {
-    findAllService,
-    findByIdService,
+    findAllProductService,
+    findByIdProductService,
 };

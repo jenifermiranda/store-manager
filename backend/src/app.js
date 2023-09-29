@@ -13,4 +13,6 @@ app.get('/', (_request, response) => {
 
 app.use(router.productRouter);
 
+app.use(router.saleRouter);
+
 module.exports = app;

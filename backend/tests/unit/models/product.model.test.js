@@ -9,7 +9,7 @@ describe('realizando testes - PRODUCT MODEL', function () {
     it('recuperando todos os produtos da tabela', async function () {
         sinon.stub(connection, 'execute').resolves([productMock.productsDB]);
 
-        const products = await productModel.findAll();
+        const products = await productModel.findAllProductsModel();
 
         expect(products).to.be.equal(productMock.productsDB);
         expect(products).to.be.deep.equal(productMock.productsDB);
@@ -19,7 +19,7 @@ describe('realizando testes - PRODUCT MODEL', function () {
         sinon.stub(connection, 'execute').resolves([[productMock.productById]]);
 
         const productId = 1;
-        const product = await productModel.findById(productId);
+        const product = await productModel.findByIdProductModel(productId);
 
         expect(product).to.be.deep.equal(productMock.productById);
         expect(product).to.be.an('object');
