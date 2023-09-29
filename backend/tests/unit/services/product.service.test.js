@@ -18,6 +18,13 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
         expect(products.data).to.be.deep.equal(productMock.productsDB);
         expect(products.status).to.be.equal('SUCCESSFUL');
     });
+    it('Testando caso de erro da função findAllProductsService', async function () {
+        sinon.stub(productModel, 'findAllProductsModel').resolves(null);
+
+        const products = await productService.findAllProductService();
+
+        expect(products.status).to.be.deep.equal('FAILURE');
+    });
 
     it('Testando a função findByIdProductService', async function () {
         sinon.stub(productModel, 'findByIdProductModel').resolves(productMock.productById);
@@ -26,5 +33,16 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
         
         expect(products.data).to.be.deep.equal(productMock.productById);
         expect(products.status).to.be.equal('SUCCESSFUL');
+    });
+    it('Testando a função addProductService', async function () {
+        sinon.stub(productModel, 'addProductModel').resolves(productMock.addProduct);
+
+        const newProduct = 'Laço da Verdade';
+
+        const product = await productService.addProductService(newProduct);
+
+        expect(product).to.be.a('object');
+        expect(product.data).to.be.deep.equal(productMock.addProduct);
+        expect(product.status).to.be.equal('SUCCESSFUL');
     });
 });

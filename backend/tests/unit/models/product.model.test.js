@@ -32,5 +32,6 @@ describe('realizando testes - PRODUCT MODEL', function () {
 
         expect(product).to.be.a('object');
         expect(product).to.be.deep.equal(productMock.addProduct);
+        expect(product.length).to.be.equal(productMock.addProduct.length);
     });
 });

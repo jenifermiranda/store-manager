@@ -4,8 +4,8 @@ module.exports = (req, res, next) => {
     if (!name) {
         return res.status(400).json({ message: '"name" is required' });
     }
-    if (name.length < 3) {
-        return res.status(400)
+    if (name.length < 6) {
+        return res.status(422)
         .json({ message: '"name" length must be at least 5 characters long' });
     }
     next();
