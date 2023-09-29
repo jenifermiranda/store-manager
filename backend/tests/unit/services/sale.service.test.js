@@ -18,6 +18,13 @@ describe('Realizando testes - SALE SERVICE', function () {
         expect(sales.data).to.be.deep.equal(saleMock.salesDB);
         expect(sales.status).to.be.equal('SUCCESSFUL');
     });
+    it('Testando caso de erro da função findAllSalesService', async function () {
+        sinon.stub(saleModel, 'findAllSalesModel').resolves(null);
+
+        const sales = await saleService.findAllSalesService();
+
+        expect(sales.status).to.be.deep.equal('FAILURE');
+    });
     it('Testa a função findByIdSaleService', async function () {
         sinon.stub(saleModel, 'findByIdSaleModel').resolves(saleMock.saleById);
 
@@ -26,5 +33,12 @@ describe('Realizando testes - SALE SERVICE', function () {
 
         expect(sale.data).to.be.deep.equal(saleMock.saleById);
         expect(sale.status).to.be.equal('SUCCESSFUL');
+    });
+    it('Testando caso de erro da função findByIdSaleService', async function () {
+        sinon.stub(saleModel, 'findByIdSaleModel').resolves(null);
+
+        const sale = await saleService.findByIdSaleService();
+
+        expect(sale.status).to.be.deep.equal('FAILURE');
     });
 });

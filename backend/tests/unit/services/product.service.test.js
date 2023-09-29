@@ -34,6 +34,13 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
         expect(products.data).to.be.deep.equal(productMock.productById);
         expect(products.status).to.be.equal('SUCCESSFUL');
     });
+    it('Testando caso de erro da função findByIdProductService', async function () {
+        sinon.stub(productModel, 'findByIdProductModel').resolves(null);
+
+        const products = await productService.findByIdProductService();
+
+        expect(products.status).to.be.deep.equal('FAILURE');
+    });
     it('Testando a função addProductService', async function () {
         sinon.stub(productModel, 'addProductModel').resolves(productMock.addProduct);
 

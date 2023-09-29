@@ -25,4 +25,23 @@ describe('realizando testes - SALE MODEL', function () {
         expect(sale).to.be.deep.equal(saleMock.saleById);
         expect(sale).to.be.an('object');
     });
+    it('cadastrando uma venda nas tabelas', async function () {
+        sinon.stub(connection, 'execute').resolves([saleMock.ResultSetHeaderSale]);
+
+        const array = [
+            {
+                productId: 1,
+                quantity: 1,
+              },
+              {
+                productId: 2,
+                quantity: 5,
+              },
+        ];
+        const sale = await saleModel.addSaleModel(array);
+
+        expect(sale).to.be.a('object');
+        expect(sale).to.be.deep.equal(saleMock.addSale);
+        expect(sale.length).to.be.equal(saleMock.addSale.length);
+    });
 });

@@ -16,7 +16,16 @@ const findByIdSaleService = async (saleId) => {
     return { status: 'SUCCESSFUL', data: sale };
 };
 
+const addSaleService = async (array) => {
+    const addSale = await saleModel.addSaleModel(array);
+    if (!addSale) {
+        return { status: 'FAILURE', data: { message: 'Sale not registered' } };
+    }
+    return { status: 'SUCCESSFUL', data: addSale };
+};
+
 module.exports = {
     findAllSalesService,
     findByIdSaleService,
+    addSaleService,
 };

@@ -26,7 +26,32 @@ const saleById = {
     quantity: 15,
 };
 
+const ResultSetHeaderSale = {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 4,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  };
+
+const addSale = {
+    id: 4,
+    itemsSold: [
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ],
+  };
+
 module.exports = {
     salesDB,
     saleById,
+    ResultSetHeaderSale,
+    addSale,
 };
