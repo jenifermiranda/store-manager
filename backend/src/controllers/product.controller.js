@@ -17,7 +17,17 @@ const findByIdProductController = async (req, res) => {
     return res.status(200).json(serviceResponse.data);
 };
 
+const addProductController = async (req, res) => {
+  const { name } = req.body;
+  const serviceResponse = await productService.addProductService(name);
+  if (serviceResponse.status !== 'SUCCESSFUL') {
+    return res.status(404).json(serviceResponse.data);
+  }
+    return res.status(201).json(serviceResponse.data);
+};
+
 module.exports = {
     findAllProductController,
     findByIdProductController,
+    addProductController,
 };

@@ -24,4 +24,13 @@ describe('realizando testes - PRODUCT MODEL', function () {
         expect(product).to.be.deep.equal(productMock.productById);
         expect(product).to.be.an('object');
     });
+    it('cadastrando um produto na tabela', async function () {
+        sinon.stub(connection, 'execute').resolves([productMock.ResultSetHeader]);
+
+        const newProduct = 'Laço da Verdade';
+        const product = await productModel.addProductModel(newProduct);
+
+        expect(product).to.be.a('object');
+        expect(product).to.be.deep.equal(productMock.addProduct);
+    });
 });

@@ -16,7 +16,16 @@ const findByIdProductService = async (productId) => {
     return { status: 'FAILURE', data: { message: 'Product not found' } };
 };
 
+const addProductService = async (productData) => {
+    const addProduct = await productModel.addProductModel(productData);
+    if (!addProduct) {
+        return { status: 'FAILURE', data: { message: 'Product not registered' } };
+    } 
+    return { status: 'SUCCESSFUL', data: addProduct };
+};
+
 module.exports = {
     findAllProductService,
     findByIdProductService,
+    addProductService,
 };

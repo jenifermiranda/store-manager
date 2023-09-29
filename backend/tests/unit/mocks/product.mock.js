@@ -17,7 +17,22 @@ const productById = {
         name: 'Martelo de Thor',
 };
 
+const ResultSetHeader = {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 4,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  };
+
+const addProduct = {
+    id: 4,
+    name: 'Laço da Verdade',
+};
 module.exports = {
     productsDB,
     productById,
+    ResultSetHeader,
+    addProduct,
 };
