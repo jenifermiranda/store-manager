@@ -13,4 +13,9 @@ router.post(
     productController.addProductController,
     );
 
+router.put(
+    '/products/:id',
+    validateName,
+    productController.updateProductController,
+    );
 module.exports = router;

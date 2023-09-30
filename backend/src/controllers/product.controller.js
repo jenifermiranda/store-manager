@@ -26,8 +26,20 @@ const addProductController = async (req, res) => {
     return res.status(201).json(serviceResponse.data);
 };
 
+const updateProductController = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const serviceResponse = await productService.updateProductService(name, id);
+  if (serviceResponse.status !== 'SUCCESSFUL') {
+    return res.status(404).json(serviceResponse.data);
+  }
+  return res.status(200).json(serviceResponse.data);
+};
+
 module.exports = {
     findAllProductController,
     findByIdProductController,
     addProductController,
+    updateProductController,
 };

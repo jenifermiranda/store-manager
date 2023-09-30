@@ -24,8 +24,26 @@ const addProductService = async (productData) => {
     return { status: 'SUCCESSFUL', data: addProduct };
 };
 
+const updateProductService = async (name, productId) => {
+    const products = await productModel.findAllProductsModel();
+    const productsId = products.map(({ id }) => id);
+
+    const productNotFound = productsId.includes(Number(productId));
+
+    if (!productNotFound) {
+        return { status: 404, data: { message: 'Product not found' } };
+    }
+
+    const updateProduct = await productModel.updateProductModel(name, productId);
+    if (!updateProduct) {
+        return { status: 'FAILURE', data: { message: 'Updated failure' } };
+    }
+    return { status: 'SUCCESSFUL', data: updateProduct };
+};
+
 module.exports = {
     findAllProductService,
     findByIdProductService,
     addProductService,
+    updateProductService,
 };

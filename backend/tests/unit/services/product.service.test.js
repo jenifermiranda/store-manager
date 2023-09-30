@@ -52,4 +52,13 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
         expect(product.data).to.be.deep.equal(productMock.addProduct);
         expect(product.status).to.be.equal('SUCCESSFUL');
     });
+    it('Testando caso de erro da função addProductService, sem productName', async function () {
+        const newProduct = '';
+        sinon.stub(productModel, 'addProductModel').resolves(newProduct);
+
+        const product = await productService.addProductService(newProduct);
+
+        expect(product).to.be.a('object');
+        expect(product.status).to.be.equal('FAILURE');
+    });
 });

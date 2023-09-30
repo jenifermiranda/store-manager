@@ -30,9 +30,14 @@ const addProduct = {
     id: 4,
     name: 'Laço da Verdade',
 };
+
+const addProductError = {
+    name: '',
+};
 module.exports = {
     productsDB,
     productById,
     ResultSetHeader,
     addProduct,
+    addProductError,
 };
