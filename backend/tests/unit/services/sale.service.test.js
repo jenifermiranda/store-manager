@@ -41,4 +41,47 @@ describe('Realizando testes - SALE SERVICE', function () {
 
         expect(sale.status).to.be.deep.equal('FAILURE');
     });
+    it('Testando a função addSaleService', async function () {
+        sinon.stub(saleModel, 'addSaleModel').resolves(saleMock.addSale);
+
+        const newSale = [
+            {
+                  productId: 1,
+                  quantity: 1,
+            },
+          ];
+        
+        const sale = await saleService.addSaleService(newSale);
+
+        expect(sale).to.be.a('object');
+        expect(sale.data).to.be.deep.equal(saleMock.addSale);
+        expect(sale.status).to.be.equal('SUCCESSFUL');
+    });
+    it('Testando caso de erro da função addSaleService, sem productId', async function () {
+        sinon.stub(saleModel, 'addSaleModel').resolves(saleMock.addSale);
+
+        const newSale = [
+            {
+                  quantity: 1,
+            },
+          ];
+
+        const sale = await saleService.addSaleService(newSale);
+
+        expect(sale.status).to.be.equal(404);
+    });
+    it('Testando caso de erro da função addSaleService, em que productId não existe', async function () {
+        sinon.stub(saleModel, 'addSaleModel').resolves(saleMock.addSale);
+
+        const newSale = [
+            {
+                  productId: 10,
+                  quantity: 1,
+            },
+          ];
+
+        const sale = await saleService.addSaleService(newSale);
+
+        expect(sale.status).to.be.equal(404);
+    });
 });

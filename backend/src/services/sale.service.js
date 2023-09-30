@@ -1,4 +1,4 @@
-const { saleModel } = require('../models');
+const { saleModel, productModel } = require('../models');
 
 const findAllSalesService = async () => {
     const sales = await saleModel.findAllSalesModel();
@@ -17,6 +17,15 @@ const findByIdSaleService = async (saleId) => {
 };
 
 const addSaleService = async (array) => {
+    const products = await productModel.findAllProductsModel();
+    const productsId = products.map(({ id }) => id);
+
+    const productNotFound = array.some(({ productId }) => !productsId.includes(productId));
+
+    if (productNotFound) {
+        return { status: 404, data: { message: 'Product not found' } };
+    }
+
     const addSale = await saleModel.addSaleModel(array);
     if (!addSale) {
         return { status: 'FAILURE', data: { message: 'Sale not registered' } };

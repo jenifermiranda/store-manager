@@ -25,6 +25,14 @@ describe('realizando testes - SALE MODEL', function () {
         expect(sale).to.be.deep.equal(saleMock.saleById);
         expect(sale).to.be.an('object');
     });
+    it('Testando caso de falha na função findByIdSaleModel', async function () {
+        sinon.stub(connection, 'execute').resolves([null]);
+
+        const saleId = 2;
+        const sale = await saleModel.findByIdSaleModel(saleId);
+        console.log(sale);
+        expect(sale).to.be.deep.equal(null);
+    });
     it('cadastrando uma venda nas tabelas', async function () {
         sinon.stub(connection, 'execute').resolves([saleMock.ResultSetHeaderSale]);
 

@@ -3,7 +3,7 @@ const sinonChai = require('sinon-chai');
 const sinon = require('sinon');
 const { saleService } = require('../../../src/services');
 const { saleController } = require('../../../src/controllers');
-const { salesDB } = require('../mocks/sale.mock');
+const { salesDB, saleById } = require('../mocks/sale.mock');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -22,5 +22,15 @@ describe('Realizando testes - SALE CONTROLLER', function () {
 
         expect(res.status).to.have.been.calledWith(200);
         expect(res.json).to.have.been.calledWithExactly(salesDB);
+    });
+    it('Testando a função findByIdSaleController', async function () {
+        const req = { params: { id: 2 } };
+
+        sinon.stub(saleService, 'findByIdSaleService').resolves({ status: 'SUCCESSFUL', data: saleById });
+
+        await saleController.findByIdSaleController(req, res);
+
+        expect(res.status).to.have.been.calledWith(200);
+        expect(res.json).to.have.been.calledWithExactly(saleById);
     });
 });
