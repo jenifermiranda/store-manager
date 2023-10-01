@@ -3,7 +3,7 @@ const sinonChai = require('sinon-chai');
 const sinon = require('sinon');
 const { saleService } = require('../../../src/services');
 const { saleController } = require('../../../src/controllers');
-const { salesDB, saleById } = require('../mocks/sale.mock');
+const { salesDB, saleById, addSale, addSaleRetorno, addSaleError } = require('../mocks/sale.mock');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -32,5 +32,24 @@ describe('Realizando testes - SALE CONTROLLER', function () {
 
         expect(res.status).to.have.been.calledWith(200);
         expect(res.json).to.have.been.calledWithExactly(saleById);
+    });
+    it('Testando a função addSaleController', async function () {
+        const req = { body: addSale };
+
+        sinon.stub(saleService, 'addSaleService').resolves({ status: 'SUCCESSFUL', data: addSaleRetorno });
+
+        await saleController.addSaleController(req, res);
+
+        expect(res.status).to.have.been.calledWith(201);
+        expect(res.json).to.have.been.calledWith(addSaleRetorno);
+    });
+    it('Testando caso de erro da função addSaleController', async function () {
+        const req = { body: addSaleError };
+
+        sinon.stub(saleService, 'addSaleService').resolves({ status: 'FAILURE' });
+
+        await saleController.addSaleController(req, res);
+
+        expect(res.status).to.have.been.calledWith(404);
     });
 });

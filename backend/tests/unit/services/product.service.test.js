@@ -61,4 +61,21 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
         expect(product).to.be.a('object');
         expect(product.status).to.be.equal('FAILURE');
     });
+    it('Testando a função updateProductService', async function () {
+        sinon.stub(productModel, 'updateProductModel').resolves(productMock.updateProduct);
+
+        const product = await productService.updateProductService('Martelo do Batman', 1);
+
+        expect(product).to.be.a('object');
+        expect(product.data).to.be.deep.equal(productMock.updateProduct);
+        expect(product.status).to.be.deep.equal('SUCCESSFUL');
+    });
+    it('Testando caso de erro da função updateProductService', async function () {
+        sinon.stub(productModel, 'updateProductModel').resolves(productMock.updateProductError);
+
+        const product = await productService.updateProductService('Martelo do Batman', 10);
+        expect(product).to.be.a('object');
+        expect(product.data).to.be.deep.equal({ message: 'Product not found' });
+        expect(product.status).to.be.deep.equal(404);
+    });
 });

@@ -35,7 +35,23 @@ const ResultSetHeaderSale = {
     warningStatus: 0,
   };
 
-const addSale = {
+  const addSale = [
+    {
+      productId: 1,
+      quantity: 1,
+    },
+    {
+      productId: 2,
+      quantity: 5,
+    },
+  ];
+  const addSaleError = [
+    {
+      productId: '',
+      quantity: 1,
+    },
+  ];
+const addSaleRetorno = {
     id: 4,
     itemsSold: [
       {
@@ -54,4 +70,6 @@ module.exports = {
     saleById,
     ResultSetHeaderSale,
     addSale,
+    addSaleError,
+    addSaleRetorno,
 };

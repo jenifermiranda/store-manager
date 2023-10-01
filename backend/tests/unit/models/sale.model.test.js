@@ -16,6 +16,13 @@ describe('realizando testes - SALE MODEL', function () {
         expect(sales).to.be.deep.equal(saleMock.salesDB);
         expect(sales.length).to.be.equal(saleMock.salesDB.length);
     });
+    it('Testando caso de falha na função findAllSalesModel', async function () {
+        sinon.stub(connection, 'execute').resolves([null]);
+
+        const sales = await saleModel.findAllSalesModel();
+
+        expect(sales).to.be.equal(null);
+    });
     it('recuperando uma venda a partir do id', async function () {
         sinon.stub(connection, 'execute').resolves([saleMock.saleById]);
 
@@ -30,7 +37,7 @@ describe('realizando testes - SALE MODEL', function () {
 
         const saleId = 2;
         const sale = await saleModel.findByIdSaleModel(saleId);
-        console.log(sale);
+
         expect(sale).to.be.deep.equal(null);
     });
     it('cadastrando uma venda nas tabelas', async function () {
@@ -49,7 +56,6 @@ describe('realizando testes - SALE MODEL', function () {
         const sale = await saleModel.addSaleModel(array);
 
         expect(sale).to.be.a('object');
-        expect(sale).to.be.deep.equal(saleMock.addSale);
-        expect(sale.length).to.be.equal(saleMock.addSale.length);
+        expect(sale).to.be.deep.equal(saleMock.addSaleRetorno);
     });
 });

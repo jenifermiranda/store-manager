@@ -34,10 +34,21 @@ const addProduct = {
 const addProductError = {
     name: '',
 };
+
+const updateProduct = {
+    name: 'Martelo do Batman',
+  };
+
+const updateProductError = {
+    name: '',
+};
+
 module.exports = {
     productsDB,
     productById,
     ResultSetHeader,
     addProduct,
     addProductError,
+    updateProduct,
+    updateProductError,
 };

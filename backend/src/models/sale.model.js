@@ -22,7 +22,6 @@ const findByIdSaleModel = async (saleId) => {
     INNER JOIN sales_products sp
     ON s.id = sp.sale_id
     WHERE s.id = ?;`, [saleId]);
-    console.log(sale);
     return sale;
 };
 

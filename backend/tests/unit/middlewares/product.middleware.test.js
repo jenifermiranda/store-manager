@@ -3,6 +3,7 @@ const sinonChai = require('sinon-chai');
 const sinon = require('sinon');
 const validateName = require('../../../src/middlewares/validateName');
 const validateProductId = require('../../../src/middlewares/validateProductId');
+const validateQuantity = require('../../../src/middlewares/validateQuantity');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -44,16 +45,28 @@ describe('realizando testes - MIDDLEWARES', function () {
         expect(res.status).to.be.calledWith(400);
         expect(res.json).to.be.calledWith({ message: '"productId" is required' });
     });
-    // it('Testa a validação validadeQuantity sem passar uma quantidade', async function () {
-    //     const req = { body: [{ productId: '1' }] };
-    //     const res = {
-    //         status: sinon.stub().returnsThis(),
-    //         json: sinon.stub(),
-    //     };
+    it('Testa a validação validadeQuantity sem passar uma quantidade', async function () {
+        const req = { body: [{ productId: '1' }] };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
 
-    //     await validateProductId(req, res, sinon.stub());
+        await validateQuantity(req, res, sinon.stub());
 
-    //     expect(res.status).to.be.calledWith(400);
-    //     expect(res.json).to.be.calledWith({ message: '"quantity" is required' });
-    // });
+        expect(res.status).to.be.calledWith(400);
+        expect(res.json).to.be.calledWith({ message: '"quantity" is required' });
+    });
+    it('Testa a validação validadeQuantity passando uma quantidade menor que 1', async function () {
+        const req = { body: [{ productId: '1', quantity: '0' }] };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
+
+        await validateQuantity(req, res, sinon.stub());
+
+        expect(res.status).to.be.calledWith(422);
+        expect(res.json).to.be.calledWith({ message: '"quantity" must be greater than or equal to 1' });
+    });
 });
