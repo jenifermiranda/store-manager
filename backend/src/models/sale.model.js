@@ -22,6 +22,7 @@ const findByIdSaleModel = async (saleId) => {
     INNER JOIN sales_products sp
     ON s.id = sp.sale_id
     WHERE s.id = ?;`, [saleId]);
+    console.log(sale);
     return sale;
 };
 
@@ -41,8 +42,15 @@ const addSaleModel = async (array) => {
     return addSale;
 };
 
+const deleteSaleModel = async (saleId) => {
+    await connection.execute('DELETE FROM sales WHERE id = ?', [saleId]);
+
+    await connection.execute('DELETE FROM sales_products WHERE sale_id = ?', [saleId]);
+};
+
 module.exports = {
     findAllSalesModel,
     findByIdSaleModel,
     addSaleModel,
+    deleteSaleModel,
 };

@@ -28,8 +28,20 @@ const addSaleController = async (req, res) => {
     return res.status(201).json(serviceResponce.data);
 };
 
+const deleteSaleController = async (req, res) => {
+    const { id } = req.params;
+
+    const serviceResponce = await saleService.deleteSaleService(id);
+    
+    if (serviceResponce.status !== 'SUCCESSFUL') {
+        return res.status(404).json(serviceResponce.data);
+    }
+    return res.status(204).end();
+};
+
 module.exports = {
     findAllSalesController,
     findByIdSaleController,
     addSaleController,
+    deleteSaleController,
 };

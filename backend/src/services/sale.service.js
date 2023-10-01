@@ -1,4 +1,5 @@
 const { saleModel, productModel } = require('../models');
+const { deleteSaleModel } = require('../models/sale.model');
 
 const findAllSalesService = async () => {
     const sales = await saleModel.findAllSalesModel();
@@ -33,8 +34,19 @@ const addSaleService = async (array) => {
     return { status: 'SUCCESSFUL', data: addSale };
 };
 
+const deleteSaleService = async (saleId) => {
+    const saleById = await saleModel.findByIdSaleModel(saleId);
+    if (saleById.length === 0) {
+        return { status: 'FAILURE', data: { message: 'Sale not found' } };
+    }
+
+    await deleteSaleModel(saleId);
+    return { status: 'SUCCESSFUL' };
+};
+
 module.exports = {
     findAllSalesService,
     findByIdSaleService,
     addSaleService,
+    deleteSaleService,
 };

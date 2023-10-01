@@ -1,4 +1,5 @@
 const { productModel } = require('../models');
+const { deleteProductModel } = require('../models/product.model');
 
 const findAllProductService = async () => {
     const products = await productModel.findAllProductsModel();
@@ -41,9 +42,20 @@ const updateProductService = async (name, productId) => {
     return { status: 'SUCCESSFUL', data: updateProduct };
 };
 
+const deleteProductService = async (productId) => {
+    const productById = await productModel.findByIdProductModel(Number(productId));
+    if (!productById) {
+        return { status: 'FAILURE', data: { message: 'Product not found' } };
+    }
+
+    await deleteProductModel(productId);
+    return { status: 'SUCCESSFUL' };
+};
+
 module.exports = {
     findAllProductService,
     findByIdProductService,
     addProductService,
     updateProductService,
+    deleteProductService,
 };

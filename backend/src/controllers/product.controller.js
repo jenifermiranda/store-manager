@@ -37,9 +37,20 @@ const updateProductController = async (req, res) => {
   return res.status(200).json(serviceResponse.data);
 };
 
+const deleteProductController = async (req, res) => {
+  const { id } = req.params;
+
+  const serviceResponse = await productService.deleteProductService(id);
+  if (serviceResponse.status === 'FAILURE') {
+    return res.status(404).json(serviceResponse.data);
+  }
+  return res.status(204).end();
+};
+
 module.exports = {
     findAllProductController,
     findByIdProductController,
     addProductController,
     updateProductController,
+    deleteProductController,
 };
