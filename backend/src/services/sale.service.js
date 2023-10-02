@@ -44,9 +44,24 @@ const deleteSaleService = async (saleId) => {
     return { status: 'SUCCESSFUL' };
 };
 
+const updateProductQuantityService = async (saleId, productId, quantity) => {
+    const saleById = await saleModel.findByIdSaleModel(saleId);
+    if (saleById.length === 0) {
+        return { status: 'FAILURE', data: { message: 'Sale not found' } };
+    }
+
+    const updateQuantity = await saleModel
+        .updateProductQuantityModel(saleId, productId, quantity);
+    if (!updateQuantity) {
+        return { status: 'FAILURE', data: { message: 'Update failure' } };
+    }
+    return { status: 'SUCCESSFUL', data: updateQuantity };
+};
+
 module.exports = {
     findAllSalesService,
     findByIdSaleService,
     addSaleService,
     deleteSaleService,
+    updateProductQuantityService,
 };

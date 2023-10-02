@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { saleController } = require('../controllers');
 const validateProductId = require('../middlewares/validateProductId');
+const validateProductUpdate = require('../middlewares/validateProductUpdate');
 const validateQuantity = require('../middlewares/validateQuantity');
 
 router.get('/sales', saleController.findAllSalesController);
@@ -16,5 +17,12 @@ router.post(
     );
 
 router.delete('/sales/:id', saleController.deleteSaleController);
+
+router.put(
+    '/sales/:saleId/products/:productId/quantity',
+    validateQuantity,
+    validateProductUpdate,
+    saleController.updateProductQuantityController,
+    );
 
 module.exports = router;

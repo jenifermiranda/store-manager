@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const { saleModel } = require('../../../src/models');
 const saleMock = require('../mocks/sale.mock');
 const { saleService } = require('../../../src/services');
+const validateProductUpdate = require('../../../src/middlewares/validateProductUpdate');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -83,5 +84,29 @@ describe('Realizando testes - SALE SERVICE', function () {
         const sale = await saleService.addSaleService(newSale);
 
         expect(sale.status).to.be.equal(404);
+    });
+    it('Testa a função deleteService', async function () {
+        sinon.stub(saleModel, 'deleteSaleModel').resolves({ status: 'SUCCESSFUL' });
+
+        await saleService.deleteSaleService(1);
+        const allSales = await saleService.findAllSalesService();
+
+        expect(allSales.status).to.be.equal('SUCCESSFUL');
+    });
+    it('Testa caso de erro da função deleteService', async function () {
+        const id = 10;
+        sinon.stub(saleModel, 'deleteSaleModel').resolves({ status: 'FAILURE' });
+
+        await saleService.deleteSaleService(id);
+        const allSales = await saleService.findAllSalesService();
+
+        expect(allSales.status).to.be.equal('SUCCESSFUL');
+    });
+    it('Testando caso de erro da função updateProductQuantity', async function () {
+        sinon.stub(saleModel, 'updateProductQuantityModel').resolves({ status: 404 });
+
+        const sale = await saleService.updateProductQuantityService(1, 99, 20);
+
+        expect(sale.status).to.be.equal('FAILURE');
     });
 });

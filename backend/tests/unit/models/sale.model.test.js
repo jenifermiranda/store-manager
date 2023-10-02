@@ -58,4 +58,13 @@ describe('realizando testes - SALE MODEL', function () {
         expect(sale).to.be.a('object');
         expect(sale).to.be.deep.equal(saleMock.addSaleRetorno);
     });
+    // it('Testando caso de erro da função deleteSaleModel', async function () {
+    //     const id = 11;
+    //     sinon.stub(connection, 'execute').resolves([null]);
+
+    //     const saleId = 2;
+    //     const sale = await saleModel.deleteSaleModel(saleId);
+
+    //     expect(sale).to.be.deep.equal(undefined);
+    // });
 });

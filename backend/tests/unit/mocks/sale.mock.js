@@ -65,6 +65,15 @@ const addSaleRetorno = {
     ],
   };
 
+const deleteSale1 = [
+  {
+    saleId: 2,
+    date: '2023-10-02T14:21:39.000Z',
+    productId: 3,
+    quantity: 15,
+  },
+];
+
 module.exports = {
     salesDB,
     saleById,
@@ -72,4 +81,5 @@ module.exports = {
     addSale,
     addSaleError,
     addSaleRetorno,
+    deleteSale1,
 };

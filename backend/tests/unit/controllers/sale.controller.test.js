@@ -23,6 +23,13 @@ describe('Realizando testes - SALE CONTROLLER', function () {
         expect(res.status).to.have.been.calledWith(200);
         expect(res.json).to.have.been.calledWithExactly(salesDB);
     });
+    it('Testando caso de erro da função findAllSalesController', async function () {
+        sinon.stub(saleService, 'findAllSalesService').resolves({ status: 'FAILURE' });
+
+        await saleController.findAllSalesController({}, res);
+
+        expect(res.status).to.have.been.calledWith(400);
+    });
     it('Testando a função findByIdSaleController', async function () {
         const req = { params: { id: 2 } };
 
@@ -32,6 +39,16 @@ describe('Realizando testes - SALE CONTROLLER', function () {
 
         expect(res.status).to.have.been.calledWith(200);
         expect(res.json).to.have.been.calledWithExactly(saleById);
+    });
+    it('Testando caso de erro da função findByIdSaleController', async function () {
+        const req = { params: { id: '' } };
+
+        sinon.stub(saleService, 'findByIdSaleService').resolves({ status: 'FAILURE', data: { message: 'Sale not found' } });
+
+        await saleController.findByIdSaleController(req, res);
+
+        expect(res.status).to.have.been.calledWith(404);
+        expect(res.json).to.have.been.calledWithExactly({ message: 'Sale not found' });
     });
     it('Testando a função addSaleController', async function () {
         const req = { body: addSale };
