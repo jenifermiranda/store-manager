@@ -5,6 +5,7 @@ const validateName = require('../../../src/middlewares/validateName');
 const validateProductId = require('../../../src/middlewares/validateProductId');
 const validateQuantity = require('../../../src/middlewares/validateQuantity');
 const validateProductUpdate = require('../../../src/middlewares/validateProductUpdate');
+const validateQuantityUpdate = require('../../../src/middlewares/validateQuantityUpdate');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -72,10 +73,10 @@ describe('realizando testes - MIDDLEWARES', function () {
         expect(res.json).to.be.calledWith({ message: '"productId" is required' });
     });
     it('Testa a validação validateQuantity', async function () {
-        const req = { body: {
+        const req = { body: [{
             productId: 1,
             quantity: 1,
-          } };
+          }] };
         const res = {
             status: sinon.stub().returnsThis(),
             json: sinon.stub(),
@@ -86,10 +87,10 @@ describe('realizando testes - MIDDLEWARES', function () {
         expect(res.status).to.not.have.been.calledWith(400);
     });
     it('Testa a validação validateQuantity sem passar uma quantidade', async function () {
-        const req = { body: {
+        const req = { body: [{
             productId: 1,
             quantity: '',
-          } };
+          }] };
         const res = {
             status: sinon.stub().returnsThis(),
             json: sinon.stub(),
@@ -101,10 +102,10 @@ describe('realizando testes - MIDDLEWARES', function () {
         expect(res.json).to.be.calledWith({ message: '"quantity" is required' });
     });
     it('Testa a validação validateQuantity passando uma quantidade inferior a 1', async function () {
-        const req = { body: {
+        const req = { body: [{
             productId: 1,
             quantity: 0,
-          } };
+          }] };
         const res = {
             status: sinon.stub().returnsThis(),
             json: sinon.stub(),
@@ -143,5 +144,49 @@ describe('realizando testes - MIDDLEWARES', function () {
 
         expect(res.status).to.have.been.calledWith(404);
         expect(res.json).to.be.calledWith({ message: 'Product not found in sale' });
+    });
+    it('Testa a validação validateQuantityUpdate', async function () {
+        const req = { body: {
+            productId: 1,
+            quantity: 1,
+          } };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
+
+        await validateQuantityUpdate(req, res, sinon.stub());
+
+        expect(res.status).to.not.have.been.calledWith(400);
+    });
+    it('Testa a validação validateQuantityUpdate sem passar uma quantidade', async function () {
+        const req = { body: {
+            productId: 1,
+            quantity: '',
+          } };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
+
+        await validateQuantityUpdate(req, res, sinon.stub());
+
+        expect(res.status).to.be.calledWith(400);
+        expect(res.json).to.be.calledWith({ message: '"quantity" is required' });
+    });
+    it('Testa a validação validateQuantityUpdate passando uma quantidade inferior a 1', async function () {
+        const req = { body: {
+            productId: 1,
+            quantity: 0,
+          } };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
+
+        await validateQuantityUpdate(req, res, sinon.stub());
+
+        expect(res.status).to.be.calledWith(422);
+        expect(res.json).to.be.calledWith({ message: '"quantity" must be greater than or equal to 1' });
     });
 });
