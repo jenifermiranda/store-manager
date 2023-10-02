@@ -4,7 +4,6 @@ const sinon = require('sinon');
 const { saleModel } = require('../../../src/models');
 const saleMock = require('../mocks/sale.mock');
 const { saleService } = require('../../../src/services');
-const validateProductUpdate = require('../../../src/middlewares/validateProductUpdate');
 
 chai.use(sinonChai);
 const { expect } = chai;
